@@ -230,7 +230,7 @@ device = torch.device("cpu")
 
 model = CNN()
 model.load_state_dict(
-    torch.load("models/plant_disease_model.pth", map_location=device)
+    torch.load("models/new_model.pt", map_location=device)
 )
 model.eval()
 
