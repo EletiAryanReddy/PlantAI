@@ -208,7 +208,7 @@ num_classes
 
 MODEL_PATH = "new_model.pt"
 
-MODEL_URL = "PASTE_YOUR_HUGGINGFACE_MODEL_LINK_HERE"
+MODEL_URL = "https://huggingface.co/eletiaryanreddy/plant-disease-model/resolve/main/new_model.pt"
 
 
 if not os.path.exists(MODEL_PATH):
