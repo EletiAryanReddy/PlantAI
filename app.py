@@ -35,6 +35,7 @@ import torch.nn as nn
 import torchvision.transforms.functional as TF
 from torchvision import models
 from datetime import datetime
+import gdown
 
 # =========================
 # UTILS
@@ -193,6 +194,7 @@ num_classes = len(class_names)
 
 print("Total Classes:", num_classes)
 
+
 # =========================
 # LOAD MODEL
 # =========================
@@ -200,18 +202,38 @@ print("Total Classes:", num_classes)
 model = models.resnet50(weights=None)
 
 model.fc = nn.Linear(
-    model.fc.in_features,
-    num_classes
+model.fc.in_features,
+num_classes
 )
 
+MODEL_PATH = "new_model.pt"
+
+MODEL_URL = "PASTE_YOUR_HUGGINGFACE_MODEL_LINK_HERE"
+
+
+if not os.path.exists(MODEL_PATH):
+    print("Downloading AI Model...")
+
+gdown.download(
+    MODEL_URL,
+    MODEL_PATH,
+    quiet=False
+)
+
+
+# Load Model
+
 model.load_state_dict(
-    torch.load(
-        "new_model.pt",
-        map_location=torch.device("cpu")
-    )
+torch.load(
+MODEL_PATH,
+map_location=torch.device("cpu")
+)
 )
 
 model.eval()
+
+print("Model Loaded Successfully")
+
 
 # =========================
 # CLEAN NAME FUNCTION
