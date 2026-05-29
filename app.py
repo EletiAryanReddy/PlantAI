@@ -226,13 +226,21 @@ gdown.download(
 
 # Load Model
 
-device = torch.device("cpu")
+os.environ["OMP_NUM_THREADS"] = "1"
 
-model = CNN(K=71)
-model.load_state_dict(
-    torch.load("models/new_model.pt", map_location=device)
-)
-model.eval()
+torch.set_num_threads(1)
+
+model = None
+
+def load_ai_model():
+    global model
+
+    if model is None:
+        model = CNN(K)
+        model.load_state_dict(
+            torch.load("new_model.pt", map_location="cpu")
+        )
+        model.eval()
 
 print("Model Loaded Successfully")
 
