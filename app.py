@@ -226,24 +226,27 @@ gdown.download(
 
 # Load Model
 
-os.environ["OMP_NUM_THREADS"] = "1"
+device = torch.device("cpu")
 
-torch.set_num_threads(1)
+try:
 
-model = None
+    model = CNN(K=len(classes))
 
-def load_ai_model():
-    global model
+    model.load_state_dict(
+        torch.load("new_model.pt", map_location=device)
+    )
 
-    if model is None:
-        model = CNN(K)
-        model.load_state_dict(
-            torch.load("new_model.pt", map_location="cpu")
-        )
-        model.eval()
+    model.to(device)
 
-print("Model Loaded Successfully")
+    model.eval()
 
+    print("Model Loaded Successfully")
+
+except Exception as e:
+
+    print("Model Loading Failed:", e)
+
+    model = None
 
 # =========================
 # CLEAN NAME FUNCTION
@@ -304,6 +307,28 @@ def prediction(image_path):
     )
 
     return disease_name, confidence_score
+
+def prediction(file_path):
+
+    global model
+
+    if model is None:
+        return "Model not loaded", 0
+
+    image = Image.open(file_path).convert("RGB")
+
+    input_data = transform(image).unsqueeze(0)
+
+    with torch.no_grad():
+        output = model(input_data)
+
+    probabilities = torch.nn.functional.softmax(output[0], dim=0)
+
+    confidence, predicted = torch.max(probabilities, 0)
+
+    pred = classes[predicted.item()]
+
+    return pred, round(confidence.item() * 100, 2)
 
 class User(UserMixin):
 
