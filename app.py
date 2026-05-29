@@ -228,7 +228,7 @@ gdown.download(
 
 device = torch.device("cpu")
 
-model = CNN()
+model = CNN(K=71)
 model.load_state_dict(
     torch.load("models/new_model.pt", map_location=device)
 )
@@ -1161,7 +1161,4 @@ def logout():
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port,
-    debug=True,
-    threaded=True
-)
+    app.run(host="0.0.0.0", port=port)
