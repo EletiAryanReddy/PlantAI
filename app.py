@@ -230,10 +230,13 @@ device = torch.device("cpu")
 
 try:
 
-    model = CNN(K=len(classes))
+    model = CNN(K=len(class_names))
 
     model.load_state_dict(
-        torch.load("new_model.pt", map_location=device)
+        torch.load(
+            "new_model.pt",
+            map_location=device
+        )
     )
 
     model.to(device)
@@ -247,7 +250,7 @@ except Exception as e:
     print("Model Loading Failed:", e)
 
     model = None
-
+    
 # =========================
 # CLEAN NAME FUNCTION
 # =========================
@@ -275,15 +278,18 @@ def clean_name(name):
 # PREDICTION FUNCTION
 # =========================
 
-def prediction(image_path):
+def prediction(file_path):
 
-    image = Image.open(image_path).convert("RGB")
+    global model
+
+    if model is None:
+        return "Model not loaded", 0
+
+    image = Image.open(file_path).convert("RGB")
 
     image = image.resize((224, 224))
 
-    input_data = TF.to_tensor(image)
-
-    input_data = input_data.unsqueeze(0)
+    input_data = TF.to_tensor(image).unsqueeze(0)
 
     with torch.no_grad():
 
@@ -299,36 +305,15 @@ def prediction(image_path):
             0
         )
 
-    disease_name = class_names[predicted.item()]
+    pred = class_names[predicted.item()]
 
     confidence_score = round(
         confidence.item() * 100,
         2
     )
 
-    return disease_name, confidence_score
+    return pred, confidence_score
 
-def prediction(file_path):
-
-    global model
-
-    if model is None:
-        return "Model not loaded", 0
-
-    image = Image.open(file_path).convert("RGB")
-
-    input_data = transform(image).unsqueeze(0)
-
-    with torch.no_grad():
-        output = model(input_data)
-
-    probabilities = torch.nn.functional.softmax(output[0], dim=0)
-
-    confidence, predicted = torch.max(probabilities, 0)
-
-    pred = classes[predicted.item()]
-
-    return pred, round(confidence.item() * 100, 2)
 
 class User(UserMixin):
 
