@@ -1,0 +1,331 @@
+```html
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+PlantAI Chatbot
+{% endblock pagetitle %}
+
+{% block body %}
+
+<style>
+
+.chat-container{
+
+    max-width: 900px;
+
+    margin: auto;
+
+    margin-top: 30px;
+}
+
+.chat-header{
+
+    background: linear-gradient(135deg,#0b6623,#16a34a);
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    color: white;
+
+    text-align: center;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.chat-box{
+
+    background: white;
+
+    height: 500px;
+
+    overflow-y: auto;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.user-msg{
+
+    background: #dcfce7;
+
+    padding: 12px 18px;
+
+    border-radius: 18px 18px 0 18px;
+
+    margin-bottom: 15px;
+
+    max-width: 75%;
+
+    margin-left: auto;
+
+    font-size: 15px;
+}
+
+.bot-msg{
+
+    background: #f1f5f9;
+
+    padding: 12px 18px;
+
+    border-radius: 18px 18px 18px 0;
+
+    margin-bottom: 15px;
+
+    max-width: 75%;
+
+    font-size: 15px;
+}
+
+.chat-input{
+
+    margin-top: 20px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.chat-input input{
+
+    flex: 1;
+
+    border-radius: 40px;
+
+    padding: 15px;
+
+    border: 1px solid #ccc;
+}
+
+.send-btn{
+
+    background: #16a34a;
+
+    color: white;
+
+    border: none;
+
+    padding: 15px 22px;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+}
+
+.voice-btn{
+
+    background: #0ea5e9;
+
+    color: white;
+
+    border: none;
+
+    padding: 15px 22px;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+}
+
+.quick-btn{
+
+    border: none;
+
+    background: #e2e8f0;
+
+    padding: 10px 15px;
+
+    border-radius: 30px;
+
+    margin: 5px;
+
+    transition: 0.3s;
+}
+
+.quick-btn:hover{
+
+    background: #16a34a;
+
+    color: white;
+}
+
+.typing{
+
+    font-size: 14px;
+
+    color: gray;
+}
+
+</style>
+
+<div class="chat-container">
+
+    <div class="chat-header">
+
+        <h2>
+            🤖 PlantAI Smart Assistant
+        </h2>
+
+        <p>
+            Ask anything like ChatGPT with voice assistant
+        </p>
+
+    </div>
+
+    <div class="chat-box" id="chat-box">
+
+        <div class="bot-msg">
+            👋 Hello! Ask me anything about plants, farming, weather, coding or general questions.
+        </div>
+
+    </div>
+
+    <div class="text-center mt-3">
+
+        <button class="quick-btn" onclick="setQuestion('Best fertilizer for rice')">
+            Best fertilizer for rice
+        </button>
+
+        <button class="quick-btn" onclick="setQuestion('Tomato disease treatment')">
+            Tomato disease
+        </button>
+
+        <button class="quick-btn" onclick="setQuestion('Weather impact on crops')">
+            Crop weather
+        </button>
+
+        <button class="quick-btn" onclick="setQuestion('Organic farming tips')">
+            Organic farming
+        </button>
+
+    </div>
+
+    <form id="chat-form">
+
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="question"
+                placeholder="Ask anything..."
+                required
+            >
+
+            <button
+                type="button"
+                class="voice-btn"
+                onclick="startVoice()"
+            >
+                🎤
+            </button>
+
+            <button
+                type="submit"
+                class="send-btn"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+const chatForm = document.getElementById("chat-form");
+
+const chatBox = document.getElementById("chat-box");
+
+function setQuestion(text){
+
+    document.getElementById("question").value = text;
+}
+
+chatForm.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    let question = document.getElementById("question").value;
+
+    if(question.trim() === "") return;
+
+    chatBox.innerHTML += `
+        <div class="user-msg">
+            ${question}
+        </div>
+    `;
+
+    chatBox.innerHTML += `
+        <div class="bot-msg typing" id="typing">
+            🤖 Thinking...
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    let response = await fetch("/chatbot", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type":"application/x-www-form-urlencoded"
+        },
+
+        body: "question=" + encodeURIComponent(question)
+    });
+
+    let data = await response.text();
+
+    document.getElementById("typing").remove();
+
+    chatBox.innerHTML += `
+        <div class="bot-msg">
+            ${data}
+        </div>
+    `;
+
+    speakText(data);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    document.getElementById("question").value = "";
+});
+
+function startVoice(){
+
+    const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+    recognition.lang = "en-US";
+
+    recognition.start();
+
+    recognition.onresult = function(event){
+
+        let transcript = event.results[0][0].transcript;
+
+        document.getElementById("question").value = transcript;
+    };
+}
+
+function speakText(text){
+
+    let speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 1;
+
+    window.speechSynthesis.speak(speech);
+}
+
+</script>
+
+{% endblock body %}
+```

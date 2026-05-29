@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Prediction History</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f5f5f5;
+            padding:20px;
+        }
+
+        .card{
+
+            background:white;
+
+            padding:20px;
+
+            margin-bottom:20px;
+
+            border-radius:10px;
+
+            box-shadow:0px 0px 10px rgba(0,0,0,0.1);
+
+        }
+
+        img{
+
+            width:200px;
+
+            border-radius:10px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Your Prediction History</h1>
+
+    {% if records %}
+
+        {% for item in records %}
+
+        <div class="card">
+
+            <img src="/{{ item.image }}">
+
+            <h2>{{ item.disease }}</h2>
+
+            <p>
+
+                <b>Confidence:</b>
+
+                {{ item.confidence }}%
+
+            </p>
+
+            <p>
+
+                <b>Description:</b>
+
+                {{ item.description }}
+
+            </p>
+
+            <p>
+
+                <b>Prevention:</b>
+
+                {{ item.prevention }}
+
+            </p>
+
+            <p>
+
+                <b>Supplement:</b>
+
+                {{ item.supplement }}
+
+            </p>
+
+            <p>
+
+                <b>Date:</b>
+
+                {{ item.date }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <h3>No Prediction History Found</h3>
+
+    {% endif %}
+
+</body>
+</html>

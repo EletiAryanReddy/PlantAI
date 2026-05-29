@@ -1,0 +1,597 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+PlantAI | Contact Us
+{% endblock pagetitle %}
+
+{% block body %}
+
+<style>
+
+body{
+    background: linear-gradient(
+        135deg,
+        #f0fff4,
+        #ecfdf5
+    );
+    overflow-x:hidden;
+}
+
+/* =========================
+HERO
+========================= */
+
+.contact-hero{
+
+    padding:80px 0 40px 0;
+
+    text-align:center;
+}
+
+.contact-badge{
+
+    display:inline-block;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    padding:10px 24px;
+
+    border-radius:50px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+}
+
+.contact-title{
+
+    font-size:60px;
+
+    font-weight:800;
+
+    color:#064e3b;
+}
+
+.contact-sub{
+
+    font-size:20px;
+
+    color:#4b5563;
+
+    max-width:700px;
+
+    margin:auto;
+
+    margin-top:15px;
+}
+
+/* =========================
+MAIN CARD
+========================= */
+
+.contact-card{
+
+    background:rgba(255,255,255,0.8);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:35px;
+
+    padding:45px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,0.08);
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.contact-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    background:#bbf7d0;
+
+    border-radius:50%;
+
+    top:-120px;
+
+    right:-120px;
+
+    opacity:0.25;
+}
+
+/* =========================
+PROFILE
+========================= */
+
+.profile-image{
+
+    width:220px;
+
+    height:220px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:6px solid #22c55e;
+
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+}
+
+.profile-name{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#064e3b;
+
+    margin-top:25px;
+}
+
+.profile-role{
+
+    color:#16a34a;
+
+    font-size:20px;
+
+    font-weight:700;
+}
+
+.profile-desc{
+
+    color:#4b5563;
+
+    line-height:1.9;
+
+    margin-top:20px;
+
+    font-size:17px;
+}
+
+/* =========================
+SKILLS
+========================= */
+
+.skill-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-top:30px;
+}
+
+.skill-box{
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:20px;
+
+    font-weight:700;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.06);
+
+    transition:0.3s;
+}
+
+.skill-box:hover{
+
+    transform:translateY(-4px);
+}
+
+/* =========================
+SOCIAL LINKS
+========================= */
+
+.social-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:20px 25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.06);
+
+    transition:0.3s;
+}
+
+.social-card:hover{
+
+    transform:translateY(-4px);
+}
+
+.social-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.social-icon{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#dcfce7;
+
+    font-size:24px;
+
+    color:#16a34a;
+}
+
+.social-title{
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:3px;
+}
+
+.social-link{
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    color:#16a34a;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.contact-btn{
+
+    background:linear-gradient(
+        to right,
+        #16a34a,
+        #22c55e
+    );
+
+    border:none;
+
+    color:white;
+
+    padding:16px 40px;
+
+    border-radius:50px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    display:inline-block;
+
+    margin-top:30px;
+
+    transition:0.3s;
+
+    box-shadow:0 12px 30px rgba(34,197,94,0.3);
+}
+
+.contact-btn:hover{
+
+    transform:translateY(-4px);
+
+    color:white;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .contact-title{
+
+        font-size:40px;
+    }
+
+    .skill-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .profile-image{
+
+        width:170px;
+        height:170px;
+    }
+}
+
+</style>
+
+<!-- HERO -->
+
+<section class="contact-hero">
+
+    <div class="container">
+
+        <div class="contact-badge">
+            🌿 PlantAI Developer
+        </div>
+
+        <h1 class="contact-title">
+            Contact Us
+        </h1>
+
+        <p class="contact-sub">
+
+            For project collaboration, AI development,
+            smart farming solutions, app development
+            and technical support.
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- MAIN -->
+
+<section class="container pb-5">
+
+    <div class="contact-card">
+
+        <div class="row align-items-center g-5">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-4 text-center">
+
+                <img
+                    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                    class="profile-image"
+                >
+
+                <h2 class="profile-name">
+                    Eleti Aryan Reddy
+                </h2>
+
+                <div class="profile-role">
+                    AI & Full Stack Developer
+                </div>
+
+                <p class="profile-desc">
+
+                    Passionate about Artificial Intelligence,
+                    Smart Farming, Machine Learning,
+                    Deep Learning and Full Stack Development.
+
+                </p>
+
+                <a
+                    href="mailto:eletiaryanreddy@gmail.com"
+                    class="contact-btn"
+                >
+                    📩 Send Email
+                </a>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-8">
+
+                <h2 class="mb-4 fw-bold text-success">
+
+                    🚀 Skills & Interests
+
+                </h2>
+
+                <div class="skill-grid">
+
+                    <div class="skill-box">
+                        🤖 Artificial Intelligence
+                    </div>
+
+                    <div class="skill-box">
+                        🧠 Machine Learning
+                    </div>
+
+                    <div class="skill-box">
+                        🌱 Smart Farming
+                    </div>
+
+                    <div class="skill-box">
+                        📱 Flutter Development
+                    </div>
+
+                    <div class="skill-box">
+                        🔗 Blockchain Technology
+                    </div>
+
+                    <div class="skill-box">
+                        💻 MERN Stack Development
+                    </div>
+
+                </div>
+
+                <h2 class="mt-5 mb-4 fw-bold text-success">
+
+                    🌐 Social Media & Contact
+
+                </h2>
+
+                <!-- EMAIL -->
+
+                <div class="social-card">
+
+                    <div class="social-left">
+
+                        <div class="social-icon">
+                            📧
+                        </div>
+
+                        <div>
+
+                            <div class="social-title">
+                                Email
+                            </div>
+
+                            <div class="text-muted">
+                                eletiaryanreddy@gmail.com
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="mailto : eletiaryanreddy@gmail.com"
+                        class="social-link"
+                    >
+                        Contact
+                    </a>
+
+                </div>
+
+                <!-- LINKEDIN -->
+
+                <div class="social-card">
+
+                    <div class="social-left">
+
+                        <div class="social-icon">
+                            💼
+                        </div>
+
+                        <div>
+
+                            <div class="social-title">
+                                LinkedIn
+                            </div>
+
+                            <div class="text-muted">
+                                AryanReddyEleti
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="https://www.linkedin.com/"
+                        target="_blank"
+                        class="social-link"
+                    >
+                        Open
+                    </a>
+
+                </div>
+
+                <!-- INSTAGRAM -->
+
+                <div class="social-card">
+
+                    <div class="social-left">
+
+                        <div class="social-icon">
+                            📸
+                        </div>
+
+                        <div>
+
+                            <div class="social-title">
+                                Instagram
+                            </div>
+
+                            <div class="text-muted">
+                                aryan_rdy_eleti
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="https://www.instagram.com/"
+                        target="_blank"
+                        class="social-link"
+                    >
+                        Follow
+                    </a>
+
+                </div>
+
+                <!-- MEDIUM -->
+
+                <div class="social-card">
+
+                    <div class="social-left">
+
+                        <div class="social-icon">
+                            ✍️
+                        </div>
+
+                        <div>
+
+                            <div class="social-title">
+                                Medium
+                            </div>
+
+                            <div class="text-muted">
+                                Read Blogs & Articles
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="https://medium.com/"
+                        target="_blank"
+                        class="social-link"
+                    >
+                        Visit
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock body %}

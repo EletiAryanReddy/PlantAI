@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+Login
+{% endblock pagetitle %}
+
+{% block body %}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
+
+    <div class="card shadow-lg p-5" style="max-width:450px;width:100%;border-radius:25px;">
+
+        <div class="text-center mb-4">
+
+            <h1 class="fw-bold text-success">
+                🌱 PlantAI
+            </h1>
+
+            <p class="text-muted">
+                Login to your account
+            </p>
+
+        </div>
+
+        <form method="POST">
+
+        
+        <div class="mb-3">
+
+        <label>Email or Phone</label>
+
+        <input
+        type="text"
+        name="email_or_phone"
+        class="form-control"
+        required>
+
+        </div>
+
+            <div class="mb-4">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+            <button class="btn btn-success w-100 py-2">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <div class="text-center mt-4">
+
+            <p>
+                Don't have an account?
+                <a href="/signup">
+                    Signup
+                </a>
+            </p>
+
+        </div>
+        <a
+    href="/google-login"
+    class="btn btn-danger w-100 rounded-pill"
+>
+
+    <i class="fab fa-google"></i>
+
+    Continue with Google
+
+</a>
+
+
+    </div>
+
+</div>
+
+{% endblock body %}

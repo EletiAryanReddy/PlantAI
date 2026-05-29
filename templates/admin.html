@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container py-5">
+
+    <h1 class="text-success mb-4">
+
+        Admin Dashboard
+
+    </h1>
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="card p-4 shadow">
+
+                <h2>
+                    Total Users
+                </h2>
+
+                <h1>
+                    {{ total_users }}
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card p-4 shadow">
+
+                <h2>
+                    Total Predictions
+                </h2>
+
+                <h1>
+                    {{ total_predictions }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

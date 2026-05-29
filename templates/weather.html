@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Weather</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#e8f5e9;
+            text-align:center;
+            padding:40px;
+        }
+
+        .box{
+            background:white;
+            padding:30px;
+            width:400px;
+            margin:auto;
+            border-radius:15px;
+            box-shadow:0px 0px 10px gray;
+        }
+
+        input{
+            padding:10px;
+            width:70%;
+        }
+
+        button{
+            padding:10px;
+            background:green;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="box">
+
+<h1>🌦 Live Weather</h1>
+
+<form method="POST">
+
+    <input type="text"
+           name="city"
+           placeholder="Enter City"
+           required>
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<br>
+
+{% if weather %}
+
+<h2>Temperature: {{weather.temperature}} °C</h2>
+
+<h2>Humidity: {{weather.humidity}}%</h2>
+
+<h2>Condition: {{weather.condition}}</h2>
+
+<h2>Wind Speed: {{weather.wind}}</h2>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

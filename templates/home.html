@@ -1,0 +1,664 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+PlantAI - Smart Plant Disease Detection
+{% endblock pagetitle %}
+
+{% block body %}
+
+<style>
+
+    body{
+        background: #f4fff7;
+        overflow-x: hidden;
+    }
+
+    .hero-section{
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url('https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?q=80&w=1600&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        border-radius: 0 0 40px 40px;
+        padding: 80px 0;
+    }
+
+    .hero-title{
+        font-size: 65px;
+        font-weight: 800;
+        color: white;
+    }
+
+    .hero-text{
+        color: #f1f1f1;
+        font-size: 20px;
+    }
+
+    .hero-btn{
+        background: #16a34a;
+        border: none;
+        padding: 14px 35px;
+        border-radius: 50px;
+        color: white;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+    .hero-btn:hover{
+        background: #15803d;
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    .feature-card{
+        border-radius: 25px;
+        background: white;
+        padding: 35px;
+        transition: 0.3s;
+        height: 100%;
+        border: none;
+    }
+
+    .feature-card:hover{
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon{
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .crop-card{
+        border-radius: 25px;
+        overflow: hidden;
+        background: white;
+        transition: 0.3s;
+        border: none;
+    }
+
+    .crop-card:hover{
+        transform: scale(1.03);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .crop-card img{
+        height: 240px;
+        object-fit: cover;
+    }
+
+    .crop-title{
+        font-weight: 700;
+        font-size: 20px;
+        color: #14532d;
+    }
+
+    .section-title{
+        font-size: 45px;
+        font-weight: 800;
+        color: #14532d;
+    }
+
+    .stats-box{
+        background: linear-gradient(135deg,#15803d,#16a34a);
+        color: white;
+        padding: 40px;
+        border-radius: 30px;
+    }
+
+    .future-card{
+        background: white;
+        border-radius: 25px;
+        padding: 30px;
+        transition: 0.3s;
+        height: 100%;
+    }
+
+    .future-card:hover{
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .weather-box{
+        background: linear-gradient(135deg,#0ea5e9,#2563eb);
+        color: white;
+        border-radius: 30px;
+        padding: 40px;
+    }
+
+    .glass{
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+    }
+
+    @media(max-width:768px){
+
+        .hero-title{
+            font-size: 42px;
+        }
+
+        .section-title{
+            font-size: 32px;
+        }
+
+    }
+
+</style>
+
+<!-- HERO SECTION -->
+
+<section class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+
+                <h1 class="hero-title">
+                    Smart AI Plant Disease Detection
+                </h1>
+
+                <p class="hero-text mt-4">
+
+                    Detect crop diseases instantly using Artificial Intelligence,
+                    Deep Learning, Weather Forecasting, Camera Scan,
+                    Voice Assistant and Smart Farming Analytics.
+
+                </p>
+
+                <div class="mt-5 d-flex flex-wrap gap-3">
+
+                    <a href="/index" class="hero-btn">
+                        <i class="fas fa-leaf"></i>
+                        Start Detection
+                    </a>
+
+                    <a href="/dashboard" class="hero-btn">
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="section-title">
+            AI Smart Features
+        </h1>
+
+        <p class="text-muted">
+            Everything farmers need in one intelligent platform
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="feature-card shadow-sm">
+
+                <div class="feature-icon bg-success">
+
+                    <i class="fas fa-camera"></i>
+
+                </div>
+
+                <h4>
+                    Camera Scan
+                </h4>
+
+                <p class="text-muted">
+                    Scan leaves instantly using mobile or laptop camera.
+                </p>
+
+                <a href="/camera" class="btn btn-success rounded-pill">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="feature-card shadow-sm">
+
+                <div class="feature-icon bg-primary">
+
+                    <i class="fas fa-cloud-sun-rain"></i>
+
+                </div>
+
+                <h4>
+                    Live Weather
+                </h4>
+
+                <p class="text-muted">
+                    Real-time weather and crop climate monitoring.
+                </p>
+
+                <a href="/weather" class="btn btn-primary rounded-pill">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="feature-card shadow-sm">
+
+                <div class="feature-icon bg-warning">
+
+                    <i class="fas fa-microphone"></i>
+
+                </div>
+
+                <h4>
+                    Voice Assistant
+                </h4>
+
+                <p class="text-muted">
+                    Ask crop questions using voice commands.
+                </p>
+
+                <a href="/voice" class="btn btn-warning rounded-pill text-dark">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="feature-card shadow-sm">
+
+                <div class="feature-icon bg-dark">
+
+                    <i class="fas fa-robot"></i>
+
+                </div>
+
+                <h4>
+                    AI Chatbot
+                </h4>
+
+                <p class="text-muted">
+                    Smart agriculture chatbot powered by AI.
+                </p>
+
+                <a href="/chatbot" class="btn btn-dark rounded-pill">
+                    Open
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FUTURE WEATHER PREDICTION -->
+
+<section class="container py-5">
+
+    <div class="weather-box shadow-lg">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+
+                <h1 class="fw-bold">
+                    Future Weather Prediction
+                </h1>
+
+                <p class="mt-3">
+
+                    AI-based weather prediction helps farmers plan irrigation,
+                    fertilizer spraying, harvesting and crop protection.
+
+                </p>
+
+                <div class="mt-4">
+
+                    <a href="/weather" class="btn btn-light rounded-pill px-4">
+                        Check Forecast
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="row g-3 mt-4 mt-lg-0">
+
+                    <div class="col-6">
+
+                        <div class="glass text-center">
+
+                            <h2>29°C</h2>
+
+                            <p>Today</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="glass text-center">
+
+                            <h2>31°C</h2>
+
+                            <p>Tomorrow</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="glass text-center">
+
+                            <h2>Humidity</h2>
+
+                            <p>78%</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="glass text-center">
+
+                            <h2>Rain</h2>
+
+                            <p>60%</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CROPS -->
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="section-title">
+            Supported Crops
+        </h1>
+
+        <p class="text-muted">
+            AI detection for fruits, vegetables and crop diseases
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="crop-card shadow-sm">
+
+                <img
+                    src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?q=80&w=1200&auto=format&fit=crop"
+                    class="w-100"
+                >
+
+                <div class="p-4 text-center">
+
+                    <h4 class="crop-title">
+                        Apple
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="crop-card shadow-sm">
+
+                <img
+                    src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=1200&auto=format&fit=crop"
+                    class="w-100"
+                >
+
+                <div class="p-4 text-center">
+
+                    <h4 class="crop-title">
+                        Tomato
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="crop-card shadow-sm">
+
+                <img
+                    src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=1200&auto=format&fit=crop"
+                    class="w-100"
+                >
+
+                <div class="p-4 text-center">
+
+                    <h4 class="crop-title">
+                        Grapes
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="crop-card shadow-sm">
+
+                <img
+    src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=1200&q=80"
+    class="w-100"
+>
+
+                <div class="p-4 text-center">
+
+                    <h4 class="crop-title">
+                        Corn
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- AI ANALYTICS -->
+
+<section class="container py-5">
+
+    <div class="stats-box shadow-lg">
+
+        <div class="row text-center">
+
+            <div class="col-lg-3 col-6">
+
+                <h1 class="fw-bold">
+                    71+
+                </h1>
+
+                <p>
+                    Disease Classes
+                </p>
+
+            </div>
+
+            <div class="col-lg-3 col-6">
+
+                <h1 class="fw-bold">
+                    98%
+                </h1>
+
+                <p>
+                    AI Accuracy
+                </p>
+
+            </div>
+
+            <div class="col-lg-3 col-6">
+
+                <h1 class="fw-bold">
+                    24/7
+                </h1>
+
+                <p>
+                    Smart Monitoring
+                </p>
+
+            </div>
+
+            <div class="col-lg-3 col-6">
+
+                <h1 class="fw-bold">
+                    AI
+                </h1>
+
+                <p>
+                    Powered Farming
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FUTURE FEATURES -->
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="section-title">
+            Upcoming Smart Features
+        </h1>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-4">
+
+            <div class="future-card shadow-sm">
+
+                <h3>
+                    🌦 AI Weather Forecast
+                </h3>
+
+                <p class="text-muted mt-3">
+
+                    7-day future prediction for crop protection and irrigation planning.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="future-card shadow-sm">
+
+                <h3>
+                    🚁 Drone Monitoring
+                </h3>
+
+                <p class="text-muted mt-3">
+
+                    Detect diseases in large farms using smart drones.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="future-card shadow-sm">
+
+                <h3>
+                    📊 Farmer Analytics
+                </h3>
+
+                <p class="text-muted mt-3">
+
+                    Crop health history, reports and smart AI insights.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock body %}

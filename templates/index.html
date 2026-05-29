@@ -1,0 +1,550 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+AI Engine
+{% endblock pagetitle %}
+
+{% block body %}
+
+<style>
+
+    body{
+        background: #f4fbf4;
+    }
+
+    .hero-section{
+
+        padding: 60px 20px 30px;
+
+        text-align: center;
+    }
+
+    .hero-title{
+
+        font-size: 60px;
+
+        font-weight: 700;
+
+        color: #0b6623;
+    }
+
+    .hero-sub{
+
+        color: #555;
+
+        font-size: 20px;
+
+        margin-top: 10px;
+    }
+
+    .main-card{
+
+        background: white;
+
+        border-radius: 25px;
+
+        padding: 30px;
+
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+        height: 100%;
+
+        transition: 0.3s;
+    }
+
+    .main-card:hover{
+
+        transform: translateY(-5px);
+    }
+
+    .icon-circle{
+
+        width: 90px;
+
+        height: 90px;
+
+        border-radius: 50%;
+
+        background: #e9f8ec;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        margin: auto;
+
+        margin-bottom: 20px;
+    }
+
+    .icon-circle i{
+
+        font-size: 40px;
+
+        color: #0b6623;
+    }
+
+    .upload-box{
+
+        border: 2px dashed #0b6623;
+
+        border-radius: 20px;
+
+        padding: 40px;
+
+        text-align: center;
+
+        background: #f9fff9;
+
+        cursor: pointer;
+
+        transition: 0.3s;
+    }
+
+    .upload-box:hover{
+
+        background: #efffef;
+    }
+
+    .upload-box i{
+
+        font-size: 60px;
+
+        color: #0b6623;
+
+        margin-bottom: 15px;
+    }
+
+    .btn-analyze{
+
+        background: linear-gradient(90deg,#0b6623,#13aa52);
+
+        border: none;
+
+        color: white;
+
+        font-size: 18px;
+
+        padding: 12px;
+
+        border-radius: 15px;
+
+        width: 100%;
+
+        margin-top: 20px;
+
+        transition: 0.3s;
+    }
+
+    .btn-analyze:hover{
+
+        transform: scale(1.02);
+
+        color: white;
+    }
+
+    .stats-card{
+
+        background: white;
+
+        border-radius: 20px;
+
+        padding: 25px;
+
+        box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+
+        text-align: center;
+
+        transition: 0.3s;
+    }
+
+    .stats-card:hover{
+
+        transform: translateY(-5px);
+    }
+
+    .stats-card h2{
+
+        color: #0b6623;
+
+        font-weight: 700;
+    }
+
+    .tips-list li{
+
+        margin-bottom: 15px;
+
+        color: #444;
+    }
+
+    .future-weather{
+
+        background: linear-gradient(135deg,#0b6623,#13aa52);
+
+        border-radius: 25px;
+
+        padding: 30px;
+
+        color: white;
+
+        margin-top: 50px;
+    }
+
+    .weather-card{
+
+        background: rgba(255,255,255,0.12);
+
+        padding: 20px;
+
+        border-radius: 20px;
+
+        text-align: center;
+
+        backdrop-filter: blur(10px);
+    }
+
+    .weather-card i{
+
+        font-size: 35px;
+
+        margin-bottom: 10px;
+    }
+
+    @media(max-width:768px){
+
+        .hero-title{
+
+            font-size: 38px;
+        }
+
+    }
+
+</style>
+
+<!-- HERO -->
+
+<div class="hero-section">
+
+    <h1 class="hero-title">
+        🌿 AI Engine
+    </h1>
+
+    <p class="hero-sub">
+        Smart AI Powered Plant Disease Detection System
+    </p>
+
+</div>
+
+<!-- MAIN SECTION -->
+
+<div class="container">
+
+    <div class="row g-4">
+
+        <!-- INFO CARD -->
+
+        <div class="col-lg-4">
+
+            <div class="main-card">
+
+                <div class="icon-circle">
+
+                    <i class="fas fa-seedling"></i>
+
+                </div>
+
+                <h3 class="text-center fw-bold mb-4">
+                    Why Plant Disease Detection?
+                </h3>
+
+                <p style="line-height: 30px; color:#555;">
+
+                    Early disease detection helps farmers reduce crop damage,
+                    improve yield, save money and protect plants before diseases
+                    spread widely.
+
+                    AI technology can instantly analyze leaf images and detect
+                    disease with high accuracy.
+
+                </p>
+
+                <div class="mt-4 text-center">
+
+                    <a href="/weather" class="btn btn-success rounded-pill px-4">
+                        Explore Weather
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- AI ENGINE -->
+
+        <div class="col-lg-4">
+
+            <div class="main-card">
+
+                <div class="icon-circle">
+
+                    <i class="fas fa-camera"></i>
+
+                </div>
+
+                <h3 class="text-center fw-bold mb-4">
+                    Detect Plant Disease
+                </h3>
+
+                <form action="/submit" method="POST" enctype="multipart/form-data">
+
+                    <div class="upload-box">
+
+                        <i class="fas fa-cloud-upload-alt"></i>
+
+                        <h4>
+                            Upload Plant Leaf Image
+                        </h4>
+
+                        <p class="text-muted">
+                            JPG, PNG Supported
+                        </p>
+
+                        <input
+                            type="file"
+                            name="image"
+                            class="form-control mt-3"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="mt-4">
+
+                        <select
+                            name="language"
+                            class="form-select"
+                        >
+
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="te">Telugu</option>
+                            <option value="ta">Tamil</option>
+                            <option value="fr">French</option>
+
+                        </select>
+
+                    </div>
+
+                    <button class="btn-analyze">
+
+                        <i class="fas fa-microscope"></i>
+
+                        Analyze Disease
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-3 text-muted">
+
+                    🔒 Secure AI Analysis
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PREVENTION -->
+
+        <div class="col-lg-4">
+
+            <div class="main-card">
+
+                <div class="icon-circle">
+
+                    <i class="fas fa-shield-virus"></i>
+
+                </div>
+
+                <h3 class="text-center fw-bold mb-4">
+                    Disease Prevention Tips
+                </h3>
+
+                <ul class="tips-list">
+
+                    <li>✅ Follow proper sanitation practices</li>
+
+                    <li>✅ Inspect plants regularly</li>
+
+                    <li>✅ Use organic fertilizers</li>
+
+                    <li>✅ Maintain healthy irrigation</li>
+
+                    <li>✅ Rotate crops seasonally</li>
+
+                    <li>✅ Remove infected leaves quickly</li>
+
+                    <li>✅ Provide proper sunlight & airflow</li>
+
+                </ul>
+
+                <div class="text-center mt-4">
+
+                    <a href="/chatbot" class="btn btn-outline-success rounded-pill px-4">
+                        Ask AI Expert
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="row mt-5 g-4">
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <h2>98.6%</h2>
+
+                <p>AI Accuracy</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <h2>71+</h2>
+
+                <p>Disease Classes</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <h2>2 Sec</h2>
+
+                <p>Prediction Time</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stats-card">
+
+                <h2>24/7</h2>
+
+                <p>AI Monitoring</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FUTURE WEATHER -->
+
+    <div class="future-weather">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                🌦 Future Weather Prediction
+            </h2>
+
+            <p>
+                Smart weather insights for better farming decisions
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <div class="weather-card">
+
+                    <i class="fas fa-sun"></i>
+
+                    <h4>Monday</h4>
+
+                    <h2>32°C</h2>
+
+                    <p>Sunny</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="weather-card">
+
+                    <i class="fas fa-cloud-rain"></i>
+
+                    <h4>Tuesday</h4>
+
+                    <h2>27°C</h2>
+
+                    <p>Rainy</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="weather-card">
+
+                    <i class="fas fa-cloud"></i>
+
+                    <h4>Wednesday</h4>
+
+                    <h2>29°C</h2>
+
+                    <p>Cloudy</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="weather-card">
+
+                    <i class="fas fa-wind"></i>
+
+                    <h4>Thursday</h4>
+
+                    <h2>30°C</h2>
+
+                    <p>Windy</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}

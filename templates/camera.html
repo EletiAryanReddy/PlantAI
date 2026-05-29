@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Scan</title>
+</head>
+<body>
+
+<h2>Live Camera</h2>
+
+<video id="video" width="400" autoplay></video>
+
+<br><br>
+
+<button onclick="capture()">Capture</button>
+
+<form id="cameraForm" method="POST" action="/camera_predict">
+
+    <input type="hidden" name="image_data" id="image_data">
+
+</form>
+
+<canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+
+<script>
+
+const video = document.getElementById("video");
+
+navigator.mediaDevices.getUserMedia({
+    video: true
+})
+.then((stream)=>{
+    video.srcObject = stream;
+});
+
+function capture(){
+
+    const canvas = document.getElementById("canvas");
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video, 0, 0, 400, 300);
+
+    const image = canvas.toDataURL("image/png");
+
+    document.getElementById("image_data").value = image;
+
+    document.getElementById("cameraForm").submit();
+}
+
+</script>
+
+</body>
+</html>

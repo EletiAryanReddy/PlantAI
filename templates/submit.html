@@ -1,0 +1,1014 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+PlantAI | Disease Detection Result
+{% endblock pagetitle %}
+
+{% block body %}
+
+<style>
+
+body{
+
+    background:linear-gradient(
+        135deg,
+        #f4fff5,
+        #eefcf0
+    );
+
+    overflow-x:hidden;
+}
+
+/* =========================
+MAIN
+========================= */
+
+.result-wrapper{
+
+    padding-top:50px;
+
+    padding-bottom:80px;
+}
+
+/* =========================
+TOP
+========================= */
+
+.result-top{
+
+    text-align:center;
+
+    margin-bottom:50px;
+}
+
+.result-badge{
+
+    display:inline-block;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    padding:10px 22px;
+
+    border-radius:50px;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+}
+
+.result-title{
+
+    font-size:58px;
+
+    font-weight:800;
+
+    color:#064e3b;
+}
+
+.result-sub{
+
+    color:#4b5563;
+
+    font-size:18px;
+
+    margin-top:10px;
+}
+
+.confidence-text{
+
+    margin-top:25px;
+
+    font-size:18px;
+
+    font-weight:700;
+}
+
+.progress{
+
+    height:20px;
+
+    border-radius:50px;
+
+    background:#d1fae5;
+
+    overflow:hidden;
+
+    max-width:550px;
+
+    margin:auto;
+}
+
+.progress-bar{
+
+    background:linear-gradient(
+        to right,
+        #16a34a,
+        #22c55e
+    );
+
+    font-weight:700;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.glass-card{
+
+    background:rgba(255,255,255,0.75);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:30px;
+
+    padding:30px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,0.08);
+
+    transition:0.4s;
+}
+
+.glass-card:hover{
+
+    transform:translateY(-5px);
+}
+
+.section-title{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    color:#065f46;
+
+    margin-bottom:20px;
+}
+
+.desc-text{
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    color:#4b5563;
+}
+
+/* =========================
+IMAGE
+========================= */
+
+.leaf-image{
+
+    width:100%;
+
+    border-radius:25px;
+
+    border:5px solid #22c55e;
+
+    object-fit:cover;
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* =========================
+SUPPLEMENT
+========================= */
+
+
+.modern-supplement-card{
+
+    background:
+    linear-gradient(
+        135deg,
+        #f0fff4,
+        #ecfdf5
+    );
+
+    padding:45px;
+
+    border-radius:35px;
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,0.08);
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.modern-supplement-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+
+    height:320px;
+
+    background:#bbf7d0;
+
+    border-radius:50%;
+
+    top:-120px;
+
+    right:-120px;
+
+    opacity:0.3;
+}
+
+.modern-supplement-image{
+
+    width:100%;
+
+    max-width:280px;
+
+    border-radius:30px;
+
+    border:5px solid #22c55e;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,0.15);
+
+    transition:0.4s;
+}
+
+.modern-supplement-image:hover{
+
+    transform:scale(1.05);
+}
+
+.ai-badge{
+
+    display:inline-block;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    padding:12px 22px;
+
+    border-radius:40px;
+
+    font-weight:700;
+}
+
+.modern-title{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#064e3b;
+}
+
+.modern-subtitle{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-top:12px;
+}
+
+.modern-desc{
+
+    font-size:18px;
+
+    color:#4b5563;
+
+    line-height:1.9;
+
+    margin-top:20px;
+}
+
+.feature-box-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-top:28px;
+}
+
+.feature-box{
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,0.06);
+}
+
+.modern-buy-btn{
+
+    background:
+    linear-gradient(
+        to right,
+        #16a34a,
+        #22c55e
+    );
+
+    border:none;
+
+    color:white;
+
+    padding:16px 40px;
+
+    border-radius:50px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 12px 30px rgba(34,197,94,0.3);
+}
+
+.modern-buy-btn:hover{
+
+    transform:translateY(-4px);
+}
+
+/* =========================
+LOW CONFIDENCE
+========================= */
+
+.low-confidence-card{
+
+    background:white;
+
+    padding:50px;
+
+    border-radius:35px;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,0.08);
+}
+
+.low-icon{
+
+    font-size:70px;
+}
+
+.low-title{
+
+    font-size:38px;
+
+    font-weight:800;
+
+    color:#dc2626;
+
+    margin-top:15px;
+}
+
+.low-text{
+
+    font-size:18px;
+
+    color:#4b5563;
+
+    line-height:1.8;
+
+    margin-top:20px;
+}
+
+.contact-btn{
+
+    background:
+    linear-gradient(
+        to right,
+        #dc2626,
+        #ef4444
+    );
+
+    border:none;
+
+    color:white;
+
+    padding:16px 40px;
+
+    border-radius:50px;
+
+    font-size:18px;
+
+    font-weight:700;
+}
+
+.supplement-card{
+
+    margin-top:50px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,0.96),
+        rgba(236,255,240,0.96)
+    );
+
+    border-radius:35px;
+
+    padding:45px;
+
+    box-shadow:0 15px 45px rgba(0,0,0,0.08);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.supplement-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    background:#bbf7d0;
+
+    border-radius:50%;
+
+    top:-100px;
+
+    right:-100px;
+
+    opacity:0.25;
+}
+
+.ai-badge{
+
+    display:inline-block;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    padding:10px 20px;
+
+    border-radius:40px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+}
+
+.supplement-title{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#064e3b;
+}
+
+.supplement-name{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-top:12px;
+}
+
+.supplement-desc{
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    color:#4b5563;
+
+    margin-top:20px;
+}
+
+.supplement-image{
+
+    width:100%;
+
+    max-width:320px;
+
+    border-radius:30px;
+
+    border:5px solid #22c55e;
+
+    object-fit:cover;
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+
+    transition:0.4s;
+}
+
+.supplement-image:hover{
+
+    transform:scale(1.04);
+}
+
+/* =========================
+FEATURES
+========================= */
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-top:30px;
+}
+
+.feature-item{
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-weight:700;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* =========================
+BUY BUTTON
+========================= */
+
+.buy-btn{
+
+    background:linear-gradient(
+        to right,
+        #16a34a,
+        #22c55e
+    );
+
+    border:none;
+
+    color:white;
+
+    padding:16px 45px;
+
+    border-radius:50px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-top:28px;
+
+    transition:0.4s;
+
+    box-shadow:0 12px 30px rgba(34,197,94,0.35);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.buy-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-100%;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,0.25);
+
+    transition:0.5s;
+}
+
+.buy-btn:hover::before{
+
+    left:100%;
+}
+
+.buy-btn:hover{
+
+    transform:translateY(-4px);
+}
+
+/* =========================
+LOW CONFIDENCE
+========================= */
+
+.low-card{
+
+    margin-top:50px;
+
+    background:white;
+
+    padding:45px;
+
+    border-radius:35px;
+
+    text-align:center;
+
+    box-shadow:0 10px 35px rgba(0,0,0,0.08);
+}
+
+.low-icon{
+
+    font-size:70px;
+}
+
+.low-title{
+
+    font-size:38px;
+
+    font-weight:800;
+
+    color:#b91c1c;
+
+    margin-top:15px;
+}
+
+.low-text{
+
+    font-size:18px;
+
+    color:#4b5563;
+
+    margin-top:15px;
+
+    line-height:1.8;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.action-btn{
+
+    background:white;
+
+    border:none;
+
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    color:#065f46;
+
+    margin:10px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+}
+
+.action-btn:hover{
+
+    background:#16a34a;
+
+    color:white;
+
+    transform:translateY(-4px);
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .result-title{
+
+        font-size:36px;
+    }
+
+    .supplement-title{
+
+        font-size:30px;
+    }
+
+    .feature-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .supplement-image{
+
+        width:100%;
+    }
+}
+
+</style>
+
+<div class="container result-wrapper">
+
+    <!-- TOP -->
+
+    <div class="result-top">
+
+        <div class="result-badge">
+            🌿 AI Disease Detection Completed
+        </div>
+
+        <h1 class="result-title">
+            {{ title }}
+        </h1>
+
+        <p class="result-sub">
+            Smart AI successfully detected your plant disease
+        </p>
+
+        <div class="confidence-text">
+            Prediction Confidence : {{ confidence }}%
+        </div>
+
+        <div class="progress mt-3">
+
+            <div
+                class="progress-bar"
+                style="width: {{ confidence }}%;"
+            >
+                {{ confidence }}%
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-4">
+
+            <div class="glass-card text-center h-100">
+
+                <h2 class="section-title">
+                    📸 Uploaded Leaf
+                </h2>
+
+                <img
+                    src="/{{ uploaded_image }}"
+                    class="leaf-image"
+                >
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-8">
+
+            <div class="glass-card mb-4">
+
+                <h2 class="section-title">
+                    🦠 Disease Description
+                </h2>
+
+                <p class="desc-text">
+                    {{ desc }}
+                </p>
+
+            </div>
+
+            <div class="glass-card">
+
+                <h2 class="section-title">
+                    🛡 Prevention & Treatment
+                </h2>
+
+                <p class="desc-text">
+                    {{ prevent }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<!-- ================================= -->
+<!-- SMART AI SUPPLEMENT SECTION -->
+<!-- ================================= -->
+
+{% if confidence >= 40 %}
+
+<div class="modern-supplement-card mt-5">
+
+    <div class="row align-items-center g-5">
+
+        <!-- IMAGE -->
+
+        <div class="col-lg-4 text-center">
+
+            {% if simage and simage != "" %}
+
+            <img
+                src="{{ simage }}"
+                class="modern-supplement-image"
+            >
+
+            {% else %}
+
+            <img
+                src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"
+                class="modern-supplement-image"
+            >
+
+            {% endif %}
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="col-lg-8">
+
+
+            <div class="card mt-4 p-4 shadow">
+
+    <h2>Recommended Supplement</h2>
+
+    {% if show_supplement and sname %}
+
+        <img 
+            src="{{ simage }}" 
+            width="250"
+            class="img-fluid rounded"
+        >
+
+        <h4 class="mt-3">
+            {{ sname }}
+        </h4>
+
+        <a 
+            href="{{ buy_link }}"
+            target="_blank"
+            class="btn btn-success mt-3"
+        >
+            Buy Now
+        </a>
+
+    {% else %}
+
+        <h5>No supplement available</h5>
+
+    {% endif %}
+
+</div>
+            <p class="modern-desc">
+
+                Based on AI confidence prediction,
+                this supplement is recommended to
+                reduce disease spread and improve
+                crop protection.
+
+            </p>
+
+            <!-- FEATURES -->
+
+            <div class="feature-box-grid">
+
+                <div class="feature-box">
+                    ✅ Disease Protection
+                </div>
+
+                <div class="feature-box">
+                    🌱 Organic Formula
+                </div>
+
+                <div class="feature-box">
+                    ⚡ Fast Recovery
+                </div>
+
+                <div class="feature-box">
+                    🛡 Long Lasting Protection
+                </div>
+
+            </div>
+
+            <!-- BUY BUTTON -->
+
+            {% if buy_link and buy_link != "" %}
+
+            <a
+                href="{{ buy_link }}"
+                target="_blank"
+            >
+
+                <button class="modern-buy-btn mt-4">
+
+                    🛒 Buy Supplement
+
+                </button>
+
+            </a>
+
+            {% else %}
+
+            <button class="modern-buy-btn mt-4">
+
+                Available Soon
+
+            </button>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% else %}
+
+<!-- LOW CONFIDENCE -->
+
+<div class="low-confidence-card mt-5 text-center">
+
+    <div class="low-icon">
+        ⚠️
+    </div>
+
+    <h2 class="low-title">
+        Low Confidence Prediction
+    </h2>
+
+    <p class="low-text">
+
+        AI confidence score is below 40%.
+
+        Please contact nearby agriculture
+        experts or agro supplement stores
+        for proper disease verification.
+
+    </p>
+
+    <a href="/contact">
+
+        <button class="contact-btn mt-4">
+
+            📞 Contact Expert
+
+        </button>
+
+    </a>
+
+</div>
+
+{% endif %}
+
+    <!-- BUTTONS -->
+
+    <div class="text-center mt-5">
+
+        <a href="/index">
+
+            <button class="action-btn">
+                🔍 Scan Another Leaf
+            </button>
+
+        </a>
+
+        <a href="/chatbot">
+
+            <button class="action-btn">
+                🤖 Ask AI Chatbot
+            </button>
+
+        </a>
+
+        <a href="/history">
+
+            <button class="action-btn">
+                📊 View History
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock body %}
