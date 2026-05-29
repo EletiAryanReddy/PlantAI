@@ -21,3 +21,4 @@ bcrypt==5.0.0
 
 python-dotenv==1.0.1
 deep-translator==1.11.4
+groq==1.2.0
