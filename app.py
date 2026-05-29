@@ -49,6 +49,7 @@ import phonenumbers
 from flask_mail import Mail, Message
 import random
 from authlib.integrations.flask_client import OAuth
+from CNN import CNN
 
 # =========================
 # FIX IMAGE ERRORS
@@ -211,6 +212,8 @@ MODEL_PATH = "new_model.pt"
 MODEL_URL = "https://huggingface.co/eletiaryanreddy/plant-disease-model/resolve/main/new_model.pt"
 
 
+
+
 if not os.path.exists(MODEL_PATH):
     print("Downloading AI Model...")
 
@@ -223,13 +226,12 @@ gdown.download(
 
 # Load Model
 
-model.load_state_dict(
-torch.load(
-MODEL_PATH,
-map_location=torch.device("cpu")
-)
-)
+device = torch.device("cpu")
 
+model = CNN()
+model.load_state_dict(
+    torch.load("models/plant_disease_model.pth", map_location=device)
+)
 model.eval()
 
 print("Model Loaded Successfully")
