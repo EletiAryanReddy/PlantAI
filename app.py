@@ -37,6 +37,7 @@ from torchvision import models
 from datetime import datetime
 import gdown
 
+
 # =========================
 # UTILS
 # =========================
@@ -200,12 +201,6 @@ print("Total Classes:", num_classes)
 # LOAD MODEL
 # =========================
 
-model = models.resnet50(weights=None)
-
-model.fc = nn.Linear(
-model.fc.in_features,
-num_classes
-)
 
 MODEL_PATH = "new_model.pt"
 
@@ -216,41 +211,38 @@ MODEL_URL = "https://huggingface.co/eletiaryanreddy/plant-disease-model/resolve/
 
 if not os.path.exists(MODEL_PATH):
     print("Downloading AI Model...")
-
-gdown.download(
-    MODEL_URL,
-    MODEL_PATH,
-    quiet=False
-)
+    gdown.download(
+        MODEL_URL,
+        MODEL_PATH,
+        quiet=False
+    )
 
 
 # Load Model
 
-device = torch.device("cpu")
+model = None
 
-try:
+def load_model():
+    global model
 
-    model = CNN(K=len(class_names))
+    if model is None:
 
-    model.load_state_dict(
-        torch.load(
-            "new_model.pt",
-            map_location=device
+        device = torch.device("cpu")
+
+        model = CNN(K=len(class_names))
+
+        model.load_state_dict(
+            torch.load(
+                "new_model.pt",
+                map_location=device
+            )
         )
-    )
 
-    model.to(device)
+        model.eval()
 
-    model.eval()
+    return model
 
-    print("Model Loaded Successfully")
 
-except Exception as e:
-
-    print("Model Loading Failed:", e)
-
-    model = None
-    
 # =========================
 # CLEAN NAME FUNCTION
 # =========================
@@ -281,6 +273,8 @@ def clean_name(name):
 def prediction(file_path):
 
     global model
+    
+    model = load_model()
 
     if model is None:
         return "Model not loaded", 0
